@@ -67,7 +67,7 @@ function preview:init(mod, button, menu)
 		function Battle:init(...)
 			orig_init(self, ...)
 			if Kristal.Ebb.active then
-				bleedtimer = -2
+				bleedtimer = -0.4
 			end
 		end
 	end
