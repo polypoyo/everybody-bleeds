@@ -10,7 +10,7 @@ function EbbOptions:init(menu)
 	
 	local function yeahnah(val)
 		return function()
-			if Kristal.Config["shatter/"..val] then
+			if Kristal.Config["ebb/"..val] then
 				return "YES"
 			else
 				return "NO"
@@ -20,40 +20,38 @@ function EbbOptions:init(menu)
 	
 	local function toggle(val)
 		return function()
-			Kristal.Config["shatter/"..val] = not Kristal.Config["shatter/"..val]
+			Kristal.Config["ebb/"..val] = not Kristal.Config["ebb/"..val]
 		end
 	end
+    local NyI = {
+        value = function()
+            return "NyI"
+        end,
+        callback = function ()
+            Assets.playSound("bluh")
+        end
+    }
 	
 	self.options = {
 		{
-			name = "Shuffle Textures",
-			value = yeahnah("textures"),
-			callback = toggle("textures"),
+			name = "Call :hurt()",
+			value = NyI.value, -- yeahnah("callhurt"),
+			callback = NyI.callback, -- toggle("callhurt"),
 		},
 		{
-			name = "Shuffle Music",
-			value = yeahnah("music"),
-			callback = toggle("music"),
+			name = "Stagger damage",
+			value = NyI.value, -- yeahnah("stagger"),
+			callback = NyI.callback, -- toggle("stagger"),
 		},
 		{
-			name = "Shuffle Sounds",
-			value = yeahnah("sounds"),
-			callback = toggle("sounds"),
+			name = "Rapid Hurting",
+			value = NyI.value, -- yeahnah("rapidtimer"),
+			callback = NyI.callback, -- toggle("rapidtimer"),
 		},
 		{
-			name = "Shuffle Fonts",
-			value = yeahnah("fonts"),
-			callback = toggle("fonts"),
-		},
-		{
-			name = "Shuffle Tilesets",
-			value = yeahnah("tilesets"),
-			callback = toggle("tilesets"),
-		},
-		{
-			name = "Shuffle Built-In",
-			value = yeahnah("built_in"),
-			callback = toggle("built_in"),
+			name = "Heal on Graze",
+			value = NyI.value, -- yeahnah("grazeheal")
+			callback = NyI.callback, -- toggle("grazeheal"),
 		},
 	}
 end
@@ -190,7 +188,7 @@ function EbbOptions:draw()
 
     local options = self.options
 
-    local title = "SHATTER OPTIONS"
+    local title = "CHALLENGE OPTIONS"
     local title_width = menu_font:getWidth(title)
 
     Draw.setColor(1, 1, 1)

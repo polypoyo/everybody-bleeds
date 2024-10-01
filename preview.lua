@@ -15,17 +15,15 @@ function preview:init(mod, button, menu)
 		local function check(setting, default)
 			Kristal.Config["ebb/"..setting] = Kristal.Config["ebb/"..setting] == nil and default or Kristal.Config["ebb/"..setting]
 		end
-		check("textures", true)
-		check("music", true)
-		check("sounds", true)
-		check("fonts", true)
-		check("tilesets", true)
-		check("built_in", true)
+		check("callhurt", true)
+		check("stagger", false)
+		check("rapidtimer", true)
+		check("grazeheal", true)
 		
 		local orig = Kristal.loadMod
 		function Kristal.loadMod(id, ...)
 			if id == mod.id then
-				MainMenu:setState("TITLE")
+				MainMenu:setState("ebb")
 			else
 				orig(id, ...)
 			end
