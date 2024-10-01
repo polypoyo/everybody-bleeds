@@ -1,6 +1,6 @@
-local ShatterOptions, super = Class(StateClass, "ShatterOptions")
+local EbbOptions, super = Class(StateClass, "EbbOptions")
 
-function ShatterOptions:init(menu)
+function EbbOptions:init(menu)
     self.menu = menu
 	
     self.scroll_target_y = 0
@@ -58,25 +58,25 @@ function ShatterOptions:init(menu)
 	}
 end
 
-function ShatterOptions:registerEvents()
+function EbbOptions:registerEvents()
     self:registerEvent("enter", self.onEnter)
     self:registerEvent("keypressed", self.onKeyPressed)
     self:registerEvent("update", self.update)
     self:registerEvent("draw", self.draw)
 end
 
-function ShatterOptions:onEnter(old_state)
+function EbbOptions:onEnter(old_state)
     self.selected_option = 1
 
     self.scroll_target_y = 0
     self.scroll_y = 0
 end
 
-function ShatterOptions:onLeave()
+function EbbOptions:onLeave()
 	Kristal.saveConfig()
 end
 
-function ShatterOptions:onKeyPressed(key, is_repeat)
+function EbbOptions:onKeyPressed(key, is_repeat)
 	
     if Input.isCancel(key) then
         Assets.stopAndPlaySound("ui_move")
@@ -143,7 +143,7 @@ function ShatterOptions:onKeyPressed(key, is_repeat)
     end
 end
 
-function ShatterOptions:getHeartPos()
+function EbbOptions:getHeartPos()
     local options = self.options
     local max_option = #options + 1
 
@@ -161,7 +161,7 @@ function ShatterOptions:getHeartPos()
     return x, y
 end
 
-function ShatterOptions:update()
+function EbbOptions:update()
     local options = self.options
     local max_option = #options + 1
 
@@ -185,7 +185,7 @@ function ShatterOptions:update()
     self.menu.heart_target_x, self.menu.heart_target_y = self:getHeartPos()
 end
 
-function ShatterOptions:draw()
+function EbbOptions:draw()
     local menu_font = Assets.getFont("main")
 
     local options = self.options
@@ -239,4 +239,4 @@ function ShatterOptions:draw()
     Draw.printShadow("Back", 0, 454 - 8, 2, "center", 640)
 end
 
-return ShatterOptions
+return EbbOptions

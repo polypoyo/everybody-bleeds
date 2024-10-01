@@ -1,8 +1,8 @@
 {
     // The ID of your mod. Should be unique!!
-    "id": "shatter",
+    "id": "everybodybleeds",
     // Displays on the main menu.
-    "name": "shatter",
+    "name": "Everybody Bleeds",
     // Displays underneath the name. Optional.
     //"subtitle": "",
 
