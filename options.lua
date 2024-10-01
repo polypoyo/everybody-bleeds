@@ -35,8 +35,8 @@ function EbbOptions:init(menu)
 	self.options = {
 		{
 			name = "Call :hurt()",
-			value = NyI.value, -- yeahnah("callhurt"),
-			callback = NyI.callback, -- toggle("callhurt"),
+			value = yeahnah("callhurt"),
+			callback = toggle("callhurt"),
 		},
 		{
 			name = "Stagger damage",
@@ -47,6 +47,11 @@ function EbbOptions:init(menu)
 			name = "Rapid Hurting",
 			value = NyI.value, -- yeahnah("rapidtimer"),
 			callback = NyI.callback, -- toggle("rapidtimer"),
+		},
+		{
+			name = "Safe Hurt",
+			value = yeahnah("safehurt"),
+			callback = toggle("safehurt"),
 		},
 		{
 			name = "Heal on Graze",

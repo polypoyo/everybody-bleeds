@@ -15,6 +15,9 @@ function preview:init(mod, button, menu)
 		local function check(setting, default)
 			Kristal.Config["ebb/"..setting] = Kristal.Config["ebb/"..setting] == nil and default or Kristal.Config["ebb/"..setting]
 		end
+		local function opt(setting)
+			return Kristal.Config["ebb/"..setting]
+		end
 		check("callhurt", true)
 		check("stagger", false)
 		check("rapidtimer", true)
@@ -32,19 +35,29 @@ function preview:init(mod, button, menu)
 		local orig_up = Battle.update
 		local orig_init = Battle.init
 		local bleedtimer = 0
+		local function safeHurt(battler, amount)
+			if not battler.is_down then
+				if opt("callhurt") then
+					battler:hurt(1)
+				else
+					battler:removeHealth(1)
+				end
+				if battler.is_down then
+					battler.chara.health = 0
+				end
+			end
+		end
 		function Battle:update()
 			orig_up(self)
-			if Kristal.Ebb.active then
-				if bleedtimer > 0 and self.party then
-					bleedtimer = bleedtimer - 0.5
-					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
-						local down = battler.is_down
-						if not down then
-							battler:hurt(3)
-							if down then
-								battler.chara.health = 0
-							end
-						end
+			if Kristal.Ebb.active and bleedtimer > 0 and self.party then
+				bleedtimer = bleedtimer - 0.5
+				for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
+					if opt("safehurt") then
+						safeHurt(battler, 1)
+					elseif opt("callhurt") then
+						battler:hurt(1)
+					else
+						battler:removeHealth(1)
 					end
 				end
 			end
