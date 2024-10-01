@@ -45,8 +45,8 @@ function EbbOptions:init(menu)
 		},
 		{
 			name = "Rapid Hurting",
-			value = NyI.value, -- yeahnah("rapidtimer"),
-			callback = NyI.callback, -- toggle("rapidtimer"),
+			value = yeahnah("rapidtimer"),
+			callback = toggle("rapidtimer"),
 		},
 		{
 			name = "Overkill",

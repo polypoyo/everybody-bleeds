@@ -20,7 +20,7 @@ function preview:init(mod, button, menu)
 		end
 		check("callhurt", true)
 		check("stagger", false)
-		check("rapidtimer", true)
+		check("rapidtimer", false)
 		check("grazeheal", true)
 		check("overkill", true)
 		
@@ -51,7 +51,7 @@ function preview:init(mod, button, menu)
 		function Battle:update()
 			orig_up(self)
 			if Kristal.Ebb.active and bleedtimer > 0 and self.party then
-				bleedtimer = bleedtimer - 0.5
+				bleedtimer = bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
 				for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
 					if not opt("overkill") then
 						safeHurt(battler, 1)
