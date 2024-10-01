@@ -1,5 +1,6 @@
 # Everybody Bleeds
 
-A mod that makes any and all battles painful.
+A mod that makes any and all battles unnecessarily stressful.
 
-Inspired by [this DELTARUNE mod](https://gamebanana.com/mods/398639).
+
+Based on KyYay's Shatter mod. Inspired by [this DELTARUNE mod](https://gamebanana.com/mods/398639).
