@@ -54,9 +54,9 @@ function EbbOptions:init(menu)
 			callback = toggle("overkill"),
 		},
 		{
-			name = "Heal on Graze",
-			value = NyI.value, -- yeahnah("grazeheal")
-			callback = NyI.callback, -- toggle("grazeheal"),
+			name = "Delay on Graze",
+			value = yeahnah("graze_bandaid"),
+			callback = toggle("graze_bandaid"),
 		},
 	}
 end
