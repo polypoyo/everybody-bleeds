@@ -49,9 +49,9 @@ function EbbOptions:init(menu)
 			callback = NyI.callback, -- toggle("rapidtimer"),
 		},
 		{
-			name = "Safe Hurt",
-			value = yeahnah("safehurt"),
-			callback = toggle("safehurt"),
+			name = "Overkill",
+			value = yeahnah("overkill"),
+			callback = toggle("overkill"),
 		},
 		{
 			name = "Heal on Graze",

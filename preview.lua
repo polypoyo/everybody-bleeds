@@ -22,6 +22,7 @@ function preview:init(mod, button, menu)
 		check("stagger", false)
 		check("rapidtimer", true)
 		check("grazeheal", true)
+		check("overkill", true)
 		
 		local orig = Kristal.loadMod
 		function Kristal.loadMod(id, ...)
@@ -52,7 +53,7 @@ function preview:init(mod, button, menu)
 			if Kristal.Ebb.active and bleedtimer > 0 and self.party then
 				bleedtimer = bleedtimer - 0.5
 				for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
-					if opt("safehurt") then
+					if not opt("overkill") then
 						safeHurt(battler, 1)
 					elseif opt("callhurt") then
 						battler:hurt(1)
