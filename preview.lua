@@ -68,7 +68,7 @@ function preview:init(mod, button, menu)
 					end
 				end
 				self.bleedtimer = self.bleedtimer + DT
-				if opt("hurts_to_move") then
+				if opt("hurts_to_move") and self.state == "DEFENDING" then
 					if Input.down("left") or Input.down("right") then 
 						self.bleedtimer = self.bleedtimer + DT
 					end
