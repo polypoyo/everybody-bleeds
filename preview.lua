@@ -50,8 +50,8 @@ function preview:init(mod, button, menu)
 		end
 		function Battle:update(...)
 			orig_up(self, ...)
-			if Kristal.Ebb.active and bleedtimer > 0 and self.party then
-				bleedtimer = bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
+			if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
+				self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
 				for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
 					if not opt("overkill") then
 						safeHurt(battler, 1)
@@ -62,14 +62,12 @@ function preview:init(mod, button, menu)
 					end
 				end
 			end
-			bleedtimer = bleedtimer + DT
-			bleedtimer = math.max(-5, bleedtimer)
+			self.bleedtimer = self.bleedtimer + DT
+			self.bleedtimer = math.max(-5, self.bleedtimer)
 		end
 		function Battle:init(...)
 			orig_init(self, ...)
-			if Kristal.Ebb.active then
-				bleedtimer = -0.4
-			end
+			self.bleedtimer = -0.4
 		end
 		local soul_update_orig = Soul.update
 		function Soul:update(...)
@@ -77,9 +75,9 @@ function preview:init(mod, button, menu)
 				for _,bullet in ipairs(Game.stage:getObjects(Bullet)) do
 					if bullet:collidesWith(self.graze_collider) then
 						if bullet.grazed then
-							bleedtimer = bleedtimer - (0.9 * DT)
+							Game.battle.bleedtimer = Game.battle.bleedtimer - (0.9 * DT)
 						else
-							bleedtimer = bleedtimer - 1
+							Game.battle.bleedtimer = Game.battle.bleedtimer - 1
 						end
 						
 					end
