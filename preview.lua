@@ -55,6 +55,13 @@ function preview:init(mod, button, menu)
 				else
 					if opt("active_turn") == "Enemy" then return end
 				end
+				if self.state == "ENEMYDIALOGUE"
+				or self.state == "ATTACKING"
+				or self.state == "CUTSCENE"
+				or self.state == "VICTORY"
+				or self.state == "ACTIONSDONE"
+				or self.state == "BATTLETEXT"
+				then return end
 				if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
 					self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
 					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
