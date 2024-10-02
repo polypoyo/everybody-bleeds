@@ -49,24 +49,26 @@ function preview:init(mod, button, menu)
 		end
 		function Battle:update(...)
 			orig_up(self, ...)
-			if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
-				self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
-				for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
-					if not opt("overkill") then
-						safeHurt(battler, 1)
-					elseif opt("callhurt") then
-						battler:hurt(1)
-					else
-						battler:removeHealth(1)
+			pcall(function()
+				if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
+					self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
+					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
+						if not opt("overkill") then
+							safeHurt(battler, 1)
+						elseif opt("callhurt") then
+							battler:hurt(1)
+						else
+							battler:removeHealth(1)
+						end
 					end
 				end
-			end
-			self.bleedtimer = self.bleedtimer + DT
-			self.bleedtimer = math.max(-5, self.bleedtimer)
+				self.bleedtimer = self.bleedtimer + DT
+				self.bleedtimer = math.max(-5, self.bleedtimer)
+			end)
 		end
 		function Battle:init(...)
-			orig_init(self, ...)
 			self.bleedtimer = -0.4
+			orig_init(self, ...)
 		end
 		local soul_update_orig = Soul.update
 		function Soul:update(...)
