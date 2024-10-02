@@ -113,7 +113,7 @@ function preview:init(mod, button, menu)
 	local heart_broken = love.graphics.newImage(mod.path.."/heart_broken.png")
 
 	local function breakHeart()
-		MainMenu.heart.color = {.7,0.4,0.4}
+		MainMenu.heart.color = {1,0,0}
 		MainMenu.heart:set(heart_broken)
 	end
 	local function unbreakHeart()
