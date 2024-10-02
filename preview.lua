@@ -35,7 +35,6 @@ function preview:init(mod, button, menu)
 		
 		local orig_up = Battle.update
 		local orig_init = Battle.init
-		local bleedtimer = 0
 		local function safeHurt(battler, amount)
 			if not battler.is_down then
 				if opt("callhurt") then
