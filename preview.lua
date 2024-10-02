@@ -133,11 +133,11 @@ function preview:init(mod, button, menu)
 			if key == "w" and not is_repeat then
 				ebb.active = not ebb.active
 				if ebb.active then
-					Assets.playSound("ui_spooky_action")
+					Assets.playSound("break2")
 					--Assets.playSound("break2")
 					breakHeart()
 				else
-					Assets.playSound("him_quick")
+					Assets.playSound("grab")
 					unbreakHeart()
 				end
 				local hearteffect = Sprite("player/heart_menu")
