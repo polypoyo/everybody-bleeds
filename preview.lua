@@ -18,11 +18,13 @@ function preview:init(mod, button, menu)
 		local function opt(setting)
 			return Kristal.Config["ebb/"..setting]
 		end
-		check("callhurt", true)
+		check("callhurt", false)
 		check("stagger", false)
-		check("rapidtimer", false)
-		check("graze_behavior", "None")
+		check("rapidtimer", true)
+		check("graze_behavior", "Heal")
 		check("overkill", true)
+		check("active_turn", "Enemy")
+		check("hurts_to_move", true)
 		
 		local orig = Kristal.loadMod
 		function Kristal.loadMod(id, ...)
