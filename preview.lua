@@ -68,13 +68,15 @@ function preview:init(mod, button, menu)
 				if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
 					self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
 					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
-						if not opt("overkill") then
-							safeHurt(battler, 1)
-						elseif opt("callhurt") then
-							battler:hurt(1)
-						else
-							battler:removeHealth(1)
-						end
+						self.timer:after(opt("stagger") and (math.random() * 12/30) or 0, function ()
+							if not opt("overkill") then
+								safeHurt(battler, 1)
+							elseif opt("callhurt") then
+								battler:hurt(1)
+							else
+								battler:removeHealth(1)
+							end
+						end)
 					end
 				end
 				self.bleedtimer = self.bleedtimer + DT

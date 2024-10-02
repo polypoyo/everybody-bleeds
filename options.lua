@@ -54,8 +54,8 @@ function EbbOptions:init(menu)
 		},
 		{
 			name = "Stagger damage",
-			value = NyI.value, -- yeahnah("stagger"),
-			callback = NyI.callback, -- toggle("stagger"),
+			value = yeahnah("stagger"),
+			callback = toggle("stagger"),
 		},
 		{
 			name = "Rapid Hurting",
