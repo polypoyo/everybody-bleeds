@@ -50,7 +50,7 @@ function preview:init(mod, button, menu)
 		function Battle:update(...)
 			orig_up(self, ...)
 			pcall(function()
-				if self.state == "DEFENDING" then
+				if self.state == "DEFENDING" or self.state == "DEFENDINGBEGIN" then
 					if opt("active_turn") == "Player" then return end
 				else
 					if opt("active_turn") == "Enemy" then return end
@@ -59,6 +59,7 @@ function preview:init(mod, button, menu)
 				or self.state == "ATTACKING"
 				or self.state == "CUTSCENE"
 				or self.state == "VICTORY"
+				or self.state == "ACTIONS"
 				or self.state == "ACTIONSDONE"
 				or self.state == "BATTLETEXT"
 				then return end
@@ -102,7 +103,7 @@ function preview:init(mod, button, menu)
 								Game.battle.bleedtimer = Game.battle.bleedtimer - 1
 							end
 						else
-							if not bullet.grazed then
+							if not bullet.grazed and self.inv_timer == 0 then
 								for i,v in ipairs(Game.battle.party) do
 									v.chara.health = math.min(v.chara:getStat("health"), v.chara.health + 5)
 									v:checkHealth()
