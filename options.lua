@@ -74,6 +74,7 @@ function EbbOptions:init(menu)
             value = yeahnah("hurts_to_move"),
             callback = toggle("hurts_to_move"),
         },
+        enum("Tick damage", "tick_damage", {1,5,10,20,25,30,40,50})
 	}
 end
 

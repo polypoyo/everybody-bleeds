@@ -25,6 +25,7 @@ function preview:init(mod, button, menu)
 		check("overkill", true)
 		check("active_turn", "Enemy")
 		check("hurts_to_move", true)
+		check("tick_damage", 1)
 		
 		local orig = Kristal.loadMod
 		function Kristal.loadMod(id, ...)
@@ -40,9 +41,9 @@ function preview:init(mod, button, menu)
 		local function safeHurt(battler, amount)
 			if not battler.is_down then
 				if opt("callhurt") then
-					battler:hurt(1)
+					battler:hurt(amount)
 				else
-					battler:removeHealth(1)
+					battler:removeHealth(amount)
 				end
 				if battler.is_down then
 					battler.chara.health = 0
@@ -70,11 +71,11 @@ function preview:init(mod, button, menu)
 					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
 						self.timer:after(opt("stagger") and (math.random() * 12/30) or 0, function ()
 							if not opt("overkill") then
-								safeHurt(battler, 1)
+								safeHurt(battler, opt("tick_damage"))
 							elseif opt("callhurt") then
-								battler:hurt(1)
+								battler:hurt(opt("tick_damage"))
 							else
-								battler:removeHealth(1)
+								battler:removeHealth(opt("tick_damage"))
 							end
 						end)
 					end
