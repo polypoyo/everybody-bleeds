@@ -31,6 +31,20 @@ function EbbOptions:init(menu)
             Assets.playSound("bluh")
         end
     }
+    local function enum(name, val, options) 
+        return {
+            name = name,
+            value = function ()
+                return Kristal.Config["ebb/"..val]
+            end,
+            callback = function()
+                local index = Utils.getIndex(options, Kristal.Config["ebb/"..val])
+                if index == nil then index = 0 end
+                index = ((index) % (#options)+1)
+                Kristal.Config["ebb/"..val] = options[index]
+            end
+        }
+    end
 	
 	self.options = {
 		{
@@ -53,11 +67,13 @@ function EbbOptions:init(menu)
 			value = yeahnah("overkill"),
 			callback = toggle("overkill"),
 		},
-		{
-			name = "Delay on Graze",
-			value = yeahnah("graze_bandaid"),
-			callback = toggle("graze_bandaid"),
-		},
+        enum("Graze Behavior", "graze_behavior", {"Heal", "Delay", "None"}),
+        enum("Active Turn", "active_turn", {"Player", "Enemy", "Both"}),
+        {
+            name = "Hurts to move",
+            value = NyI.value,
+            callback = NyI.callback,
+        },
 	}
 end
 

@@ -21,7 +21,7 @@ function preview:init(mod, button, menu)
 		check("callhurt", true)
 		check("stagger", false)
 		check("rapidtimer", false)
-		check("graze_bandaid", true)
+		check("graze_behavior", "None")
 		check("overkill", true)
 		
 		local orig = Kristal.loadMod
@@ -50,6 +50,11 @@ function preview:init(mod, button, menu)
 		function Battle:update(...)
 			orig_up(self, ...)
 			pcall(function()
+				if self.state == "DEFENDING" then
+					if opt("active_turn") == "Player" then return end
+				else
+					if opt("active_turn") == "Enemy" then return end
+				end
 				if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
 					self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
 					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
@@ -72,15 +77,23 @@ function preview:init(mod, button, menu)
 		end
 		local soul_update_orig = Soul.update
 		function Soul:update(...)
-			if opt("graze_bandaid") then
+			if opt("graze_behavior") ~= "None" then
 				for _,bullet in ipairs(Game.stage:getObjects(Bullet)) do
 					if bullet:collidesWith(self.graze_collider) then
-						if bullet.grazed then
-							Game.battle.bleedtimer = Game.battle.bleedtimer - (0.9 * DT)
+						if opt("graze_behavior") == "Delay" then
+							if bullet.grazed then
+								Game.battle.bleedtimer = Game.battle.bleedtimer - (0.9 * DT)
+							else
+								Game.battle.bleedtimer = Game.battle.bleedtimer - 1
+							end
 						else
-							Game.battle.bleedtimer = Game.battle.bleedtimer - 1
+							if not bullet.grazed then
+								for i,v in ipairs(Game.battle.party) do
+									v.chara.health = math.min(v.chara:getStat("health"), v.chara.health + 5)
+									v:checkHealth()
+								end
+							end
 						end
-						
 					end
 				end
 			end
