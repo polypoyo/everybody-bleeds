@@ -68,6 +68,14 @@ function preview:init(mod, button, menu)
 					end
 				end
 				self.bleedtimer = self.bleedtimer + DT
+				if opt("hurts_to_move") then
+					if Input.down("left") or Input.down("right") then 
+						self.bleedtimer = self.bleedtimer + DT
+					end
+					if Input.down("up") or Input.down("down") then 
+						self.bleedtimer = self.bleedtimer + DT
+					end
+				end
 				self.bleedtimer = math.max(-5, self.bleedtimer)
 			end)
 		end

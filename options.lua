@@ -71,8 +71,8 @@ function EbbOptions:init(menu)
         enum("Active Turn", "active_turn", {"Player", "Enemy", "Both"}),
         {
             name = "Hurts to move",
-            value = NyI.value,
-            callback = NyI.callback,
+            value = yeahnah("hurts_to_move"),
+            callback = toggle("hurts_to_move"),
         },
 	}
 end
