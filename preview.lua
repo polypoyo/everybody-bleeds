@@ -98,7 +98,7 @@ function preview:init(mod, button, menu)
 		end
 		local soul_update_orig = Soul.update
 		function Soul:update(...)
-			if opt("graze_behavior") ~= "None" then
+			if Kristal.Ebb.active and opt("graze_behavior") ~= "None" then
 				for _,bullet in ipairs(Game.stage:getObjects(Bullet)) do
 					if bullet:collidesWith(self.graze_collider) then
 						if opt("graze_behavior") == "Delay" then
