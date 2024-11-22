@@ -103,42 +103,11 @@ function preview:init(mod, button)
 	end
 	local ebb = Kristal.Ebb
 	
-	local heart_broken = love.graphics.newImage(mod.path.."/heart_broken.png")
-
-	local function breakHeart()
-		MainMenu.heart.color = {1,0,0}
-		MainMenu.heart:set(heart_broken)
-	end
-	local function unbreakHeart()
-		MainMenu.heart.color = {Kristal.getSoulColor()}
-		MainMenu.heart:set("player/heart_menu")
-	end
-	
 	if MainMenu and MainMenu.mod_list ~= Kristal.Ebb.mod_list then
 		local options = require(mod.path.."/options")
 		MainMenu.state_manager:addState("ebb", options(MainMenu))
 		
 		Kristal.Ebb.mod_list = MainMenu.mod_list
-		
-		local orig = MainMenu.mod_list.onKeyPressed
-		
-		local orig = MainMenu.mod_list.onEnter
-		MainMenu.state_manager:addEvent("enter",{MODSELECT = function(menu)
-			if isActive() then
-				breakHeart()
-			else
-				unbreakHeart()
-			end
-			orig(menu.mod_list)
-		end})
-		
-		local orig = MainMenu.mod_list.onLeave
-		MainMenu.state_manager:addEvent("leave",{MODSELECT = function(menu, new_state)
-			if new_state == "TITLE" then
-				unbreakHeart()
-			end
-			orig(menu.mod_list)
-		end})
 	end
 	
     button:setColor(1, 1, 1)
