@@ -5,9 +5,11 @@ preview.hide_background = false
 function preview:init(mod, button)
 	-- TODO: find a better way to hide from mod list while still running this script
 	MainMenu.mod_list.list:removeChild(button)
+	local function isActive()
+		return Kristal.Config["plugins/enabled_plugins"][mod.id]
+	end
 	if MainMenu and not Kristal.Ebb then
 		Kristal.Ebb = {
-			active = false
 			--[[
 			options = {
 				textures = Kristal.Config["ebb/textures"] or true
@@ -68,7 +70,7 @@ function preview:init(mod, button)
 				or self.state == "ACTIONSDONE"
 				or self.state == "BATTLETEXT"
 				then return end
-				if Kristal.Ebb.active and self.bleedtimer > 0 and self.party then
+				if isActive() and self.bleedtimer > 0 and self.party then
 					self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
 					for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
 						self.timer:after(opt("stagger") and (math.random() * 12/30) or 0, function ()
@@ -100,7 +102,7 @@ function preview:init(mod, button)
 		end
 		local soul_update_orig = Soul.update
 		function Soul:update(...)
-			if Kristal.Ebb.active and opt("graze_behavior") ~= "None" then
+			if isActive() and opt("graze_behavior") ~= "None" then
 				for _,bullet in ipairs(Game.stage:getObjects(Bullet)) do
 					if bullet:collidesWith(self.graze_collider) then
 						if opt("graze_behavior") == "Delay" then
@@ -143,40 +145,10 @@ function preview:init(mod, button)
 		Kristal.Ebb.mod_list = MainMenu.mod_list
 		
 		local orig = MainMenu.mod_list.onKeyPressed
-		MainMenu.state_manager:addEvent("keypressed",{MODSELECT = function(menu, key, is_repeat)
-			--Kristal.Console:log("guh.")
-			if key == "w" and not is_repeat then
-				ebb.active = not ebb.active
-				if ebb.active then
-					Assets.playSound("break2")
-					--Assets.playSound("break2")
-					breakHeart()
-				else
-					Assets.playSound("grab")
-					unbreakHeart()
-				end
-				local hearteffect = Sprite("player/heart_menu")
-				hearteffect:setOrigin(0.5, 0.5)
-				hearteffect:setScale(2, 2)
-				hearteffect:setPosition(MainMenu.heart:getPosition())
-				hearteffect.color = menu.heart.color
-				hearteffect:setLayer(menu.heart.layer - 1)
-				MainMenu.stage:addChild(hearteffect)
-				MainMenu.stage.timer:tween(.5, hearteffect, {scale_x=4, scale_y=4, alpha=0})
-				local col = menu.heart.color
-				menu.heart.color = {1,1,1,1}
-				MainMenu.stage.timer:tween(.5, menu.heart, {color=col})
-				MainMenu.stage.timer:after(.5, function()
-					hearteffect:remove()
-				end)
-			else
-				orig(menu.mod_list, key, is_repeat)
-			end
-		end})
 		
 		local orig = MainMenu.mod_list.onEnter
 		MainMenu.state_manager:addEvent("enter",{MODSELECT = function(menu)
-			if ebb.active then
+			if isActive() then
 				breakHeart()
 			else
 				unbreakHeart()
@@ -211,16 +183,6 @@ function preview:update()
 end
 
 function preview:draw()
-end
-
-local subfont = Assets.getFont("main", 16)
-function preview:drawOverlay()
-	if MainMenu and MainMenu.state == "MODSELECT" then
-		love.graphics.setColor(COLORS.white)
-		love.graphics.setFont(subfont)
-		local txt = Kristal.Ebb.active and "[W] Deactivate EBB" or "[W] Activate EBB"
-		Draw.printShadow(txt, -70, 30, 1, "right", 640)
-	end
 end
 
 return preview

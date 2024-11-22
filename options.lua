@@ -50,10 +50,10 @@ function EbbOptions:init(menu)
         {
 			name = "Active",
 			value = function ()
-                return Kristal.Ebb.active and "ON" or "OFF"
+                return Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"] and "ON" or "OFF"
             end,
 			callback = function ()
-                Kristal.Ebb.active = not Kristal.Ebb.active
+                Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"] = not Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"]
             end,
 		},
 		{
