@@ -1,12 +1,9 @@
 local Soul, super = Class(Soul)
-local function isActive()
-    return Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"]
-end
 local function opt(setting)
     return Kristal.Config["ebb/"..setting]
 end
 function Soul:update()
-    if isActive() and opt("graze_behavior") ~= "None" then
+    if opt("graze_behavior") ~= "None" then
         for _,bullet in ipairs(Game.stage:getObjects(Bullet)) do
             if bullet:collidesWith(self.graze_collider) then
                 if opt("graze_behavior") == "Delay" then
