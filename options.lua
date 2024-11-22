@@ -47,6 +47,15 @@ function EbbOptions:init(menu)
     end
 	
 	self.options = {
+        {
+			name = "Active",
+			value = function ()
+                return Kristal.Ebb.active and "ON" or "OFF"
+            end,
+			callback = function ()
+                Kristal.Ebb.active = not Kristal.Ebb.active
+            end,
+		},
 		{
 			name = "Call :hurt()",
 			value = yeahnah("callhurt"),
@@ -103,7 +112,7 @@ function EbbOptions:onKeyPressed(key, is_repeat)
 
         Kristal.saveConfig()
 
-        self.menu:setState("MODSELECT")
+        self.menu:setState("plugins")
         return
     end
 
@@ -156,7 +165,7 @@ function EbbOptions:onKeyPressed(key, is_repeat)
             -- "Back" button
             Kristal.saveConfig()
 
-            self.menu:setState("MODSELECT")
+            self.menu:setState("plugins")
         else
             options[self.selected_option].callback()
         end

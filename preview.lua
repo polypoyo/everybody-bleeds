@@ -2,7 +2,9 @@ local preview = {}
 
 preview.hide_background = false
 
-function preview:init(mod, button, menu)
+function preview:init(mod, button)
+	-- TODO: find a better way to hide from mod list while still running this script
+	MainMenu.mod_list.list:removeChild(button)
 	if MainMenu and not Kristal.Ebb then
 		Kristal.Ebb = {
 			active = false

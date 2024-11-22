@@ -50,5 +50,8 @@
     "config": {
         "kristal": {
         },
+    },
+    "plugin": {
+        "menu": "ebb"
     }
 }
