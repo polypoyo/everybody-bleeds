@@ -86,11 +86,11 @@ function EbbOptions:init(menu)
 			callback = toggle("stagger"),
 		},
         enum("Seconds per Tick", "timerrate", {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0}),
-		{
-			name = "Rapid Hurting",
-			value = yeahnah("rapidtimer"),
-			callback = toggle("rapidtimer"),
-		},
+        {
+            name = "Overkill",
+            value = yeahnah("overkill"),
+            callback = toggle("overkill"),
+        },
         enum("Graze Behavior", "graze_behavior", {"Heal", "Delay", "None"}),
         enum("Active Turn", "active_turn", {"Player", "Enemy", "Both"}),
         {
