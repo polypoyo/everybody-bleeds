@@ -31,7 +31,7 @@ function Battle:update()
         or self.state == "BATTLETEXT"
         then return end
         if self.bleedtimer > 0 and self.party then
-            self.bleedtimer = self.bleedtimer - ({[true] = 0.1, [false] = 0.5})[opt("rapidtimer")] -- cool ternary expression bro
+            self.bleedtimer = self.bleedtimer - opt("timerrate")
             for index, --[[@type PartyBattler]] battler in ipairs(self.party) do
                 self.timer:after(opt("stagger") and (math.random() * 12/30) or 0, function ()
                     if not opt("overkill") then
@@ -46,10 +46,10 @@ function Battle:update()
         end
         self.bleedtimer = self.bleedtimer + DT
         if opt("hurts_to_move") and self.state == "DEFENDING" then
-            if Input.down("left") or Input.down("right") then 
+            if Input.down("left") or Input.down("right") then
                 self.bleedtimer = self.bleedtimer + DT
             end
-            if Input.down("up") or Input.down("down") then 
+            if Input.down("up") or Input.down("down") then
                 self.bleedtimer = self.bleedtimer + DT
             end
         end
