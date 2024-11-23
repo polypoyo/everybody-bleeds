@@ -1,8 +1,21 @@
 local EbbOptions, super = Class(StateClass, "EbbOptions")
 
+local function check(setting, default)
+    Kristal.Config["ebb/"..setting] = Kristal.Config["ebb/"..setting] == nil and default or Kristal.Config["ebb/"..setting]
+end
+
 function EbbOptions:init(menu)
     self.menu = menu
-	
+
+    check("callhurt", false)
+    check("stagger", false)
+    check("rapidtimer", true)
+    check("graze_behavior", "Heal")
+    check("overkill", true)
+    check("active_turn", "Enemy")
+    check("hurts_to_move", true)
+    check("tick_damage", 1)
+
     self.scroll_target_y = 0
     self.scroll_y = 0
 

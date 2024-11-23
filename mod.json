@@ -40,7 +40,7 @@
     "hardReset": false,
 
     // Whether the mod is hidden from the mod selection.
-    "hidden": false,
+    "hidden": true,
 	
 	//hehehaha
     "useSaves": false,
@@ -52,6 +52,6 @@
         },
     },
     "plugin": {
-        "menu": "ebb"
+        "menu": true
     }
 }
