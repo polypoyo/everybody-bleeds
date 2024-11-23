@@ -67,15 +67,6 @@ function EbbOptions:init(menu)
 	
 	self.options = {
         {
-			name = "Active",
-			value = function ()
-                return Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"] and "ON" or "OFF"
-            end,
-			callback = function ()
-                Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"] = not Kristal.Config["plugins/enabled_plugins"]["everybodybleeds"]
-            end,
-		},
-		{
 			name = "Call :hurt()",
 			value = yeahnah("callhurt"),
 			callback = toggle("callhurt"),
