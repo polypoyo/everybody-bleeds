@@ -53,6 +53,12 @@ function EbbOptions:init(menu)
             callback = function()
                 local index = Utils.getIndex(options, Kristal.Config["ebb/"..val])
                 if index == nil then index = 0 end
+                index = ((index-2) % (#options))+1
+                Kristal.Config["ebb/"..val] = options[index]
+            end,
+            aux = function()
+                local index = Utils.getIndex(options, Kristal.Config["ebb/"..val])
+                if index == nil then index = 0 end
                 index = ((index) % (#options)+1)
                 Kristal.Config["ebb/"..val] = options[index]
             end
@@ -177,6 +183,14 @@ function EbbOptions:onKeyPressed(key, is_repeat)
             self.menu:setState("plugins")
         else
             options[self.selected_option].callback()
+        end
+    end
+    if Input.isMenu(key) then
+        if self.selected_option == max_option then
+            -- do nothing
+        elseif options[self.selected_option].aux then
+            Assets.stopAndPlaySound("ui_select")
+            options[self.selected_option].aux()
         end
     end
 end
